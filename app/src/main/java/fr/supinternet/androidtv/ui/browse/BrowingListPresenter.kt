@@ -3,6 +3,7 @@ package fr.supinternet.androidtv.ui.browse
 import android.util.Log
 import android.view.ViewGroup
 import androidx.leanback.widget.ImageCardView
+import androidx.leanback.widget.OnItemViewClickedListener
 import androidx.leanback.widget.Presenter
 import fr.supinternet.androidtv.data.network.model.Movie
 import kotlin.math.round
@@ -35,5 +36,6 @@ class BrowingListPresenter : Presenter() {
     override fun onUnbindViewHolder(viewHolder: ViewHolder?) {
         // Nous ne l'utiliserons pas
     }
+
 
 }

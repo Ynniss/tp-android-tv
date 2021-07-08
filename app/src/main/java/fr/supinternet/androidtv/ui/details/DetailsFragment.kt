@@ -2,19 +2,17 @@ package fr.supinternet.androidtv.ui.details
 
 import android.os.Bundle
 import android.util.Log
-import android.view.View
-import androidx.leanback.app.BrowseSupportFragment
-import androidx.leanback.widget.ArrayObjectAdapter
-import androidx.leanback.widget.HeaderItem
-import androidx.leanback.widget.ListRow
-import androidx.leanback.widget.ListRowPresenter
-import androidx.lifecycle.lifecycleScope
-import fr.supinternet.androidtv.data.network.NetworkManager
-import kotlinx.coroutines.*
+import androidx.leanback.app.DetailsSupportFragment
 
-class DetailsFragment : BrowseSupportFragment() {
+class DetailsFragment : DetailsSupportFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val selectedMovieData = requireArguments().getString("movieData")
+
+        selectedMovieData.let {
+            Log.d("LE FILM SELECTIONNER", selectedMovieData.toString())
+        }
 
     }
 }

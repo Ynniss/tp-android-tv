@@ -1,16 +1,18 @@
 package fr.supinternet.androidtv.ui.browse
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.view.View
 import androidx.leanback.app.BrowseSupportFragment
-import androidx.leanback.widget.ArrayObjectAdapter
-import androidx.leanback.widget.HeaderItem
-import androidx.leanback.widget.ListRow
-import androidx.leanback.widget.ListRowPresenter
+import androidx.leanback.widget.*
 import androidx.lifecycle.lifecycleScope
 import fr.supinternet.androidtv.data.network.NetworkManager
-import kotlinx.coroutines.*
+import fr.supinternet.androidtv.data.network.model.Movie
+import fr.supinternet.androidtv.ui.main.DetailsActivity
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
+
 
 class BrowseFragment : BrowseSupportFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -24,8 +26,7 @@ class BrowseFragment : BrowseSupportFragment() {
         adapter = fragmentAdapter
         prepareEntranceTransition()
 
-
-        val job = lifecycleScope.launch(Dispatchers.Main) {
+        lifecycleScope.launch(Dispatchers.Main) {
             val boxOffice = async(Dispatchers.IO) {
                 NetworkManager.getBoxOffice()
             }
@@ -37,15 +38,26 @@ class BrowseFragment : BrowseSupportFragment() {
                 boxOfficeAdapter.add(movie)
             }
 
-            anticipatedMovies.await().forEach { movie ->
-                anticipatedAdapter.add(movie)
+            anticipatedMovies.await().apply {
+                forEach { movie ->
+                    anticipatedAdapter.add(movie)
+                }
             }
-
             startEntranceTransition()
         }
-
-
         fragmentAdapter.add(ListRow(HeaderItem(0, "Les sorties"), boxOfficeAdapter))
         fragmentAdapter.add(ListRow(HeaderItem(0, "Attendus"), anticipatedAdapter))
+
+        onItemViewClickedListener =
+            OnItemViewClickedListener { itemViewHolder, item, rowViewHolder, row ->
+                Log.d("TAG", item.toString())
+                val intent = Intent(requireContext(), DetailsActivity::class.java)
+                intent.putExtra("movieData", item.toString())
+                startActivity(intent)
+            }
+    }
+
+    override fun setOnItemViewClickedListener(listener: OnItemViewClickedListener?) {
+        super.setOnItemViewClickedListener(listener)
     }
 }
