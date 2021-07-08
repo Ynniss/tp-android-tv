@@ -2,6 +2,7 @@ package fr.supinternet.androidtv.ui.browse
 
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import androidx.leanback.app.BrowseSupportFragment
 import androidx.leanback.widget.ArrayObjectAdapter
 import androidx.leanback.widget.HeaderItem
@@ -15,37 +16,33 @@ class BrowseFragment : BrowseSupportFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        prepareEntranceTransition()
 
         val fragmentAdapter = ArrayObjectAdapter(ListRowPresenter())
         val boxOfficeAdapter = ArrayObjectAdapter(BrowingListPresenter())
-        val AttenduAdapter = ArrayObjectAdapter(BrowingListPresenter())
+        val anticipatedAdapter = ArrayObjectAdapter(BrowingListPresenter())
 
         adapter = fragmentAdapter
+        prepareEntranceTransition()
 
 
-        lifecycleScope.launch(Dispatchers.IO) {
-            withContext(Dispatchers.IO) {
-                val boxOffice = NetworkManager.getBoxOffice()
-                boxOffice.forEach { movie ->
-                    withContext(Dispatchers.Main) {
-                        boxOfficeAdapter.add(movie)
-                    }
-                }
+        lifecycleScope.launch(Dispatchers.Main) {
+            val boxOffice = async(Dispatchers.IO) {
+                NetworkManager.getBoxOffice()
+            }
+            val anticipatedMovies = async(Dispatchers.IO) {
+                NetworkManager.getAnticipatedMovies()
             }
 
-            withContext(Dispatchers.IO) {
-                val anticipatedMovies = NetworkManager.getAnticipatedMovies()
-                anticipatedMovies.forEach { movie ->
-                    withContext(Dispatchers.Main) {
-                        AttenduAdapter.add(movie)
-                    }
-                }
+            boxOffice.await().forEach { movie ->
+                boxOfficeAdapter.add(movie)
             }
-
+            anticipatedMovies.await().forEach { movie ->
+                anticipatedAdapter.add(movie)
+            }
+            startEntranceTransition()
         }
 
         fragmentAdapter.add(ListRow(HeaderItem(0, "Les sorties"), boxOfficeAdapter))
-        fragmentAdapter.add(ListRow(HeaderItem(0, "Attendus"), AttenduAdapter))
+        fragmentAdapter.add(ListRow(HeaderItem(0, "Attendus"), anticipatedAdapter))
     }
 }
