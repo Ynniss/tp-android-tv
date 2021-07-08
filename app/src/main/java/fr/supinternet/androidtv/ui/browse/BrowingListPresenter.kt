@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.leanback.widget.ImageCardView
 import androidx.leanback.widget.Presenter
 import fr.supinternet.androidtv.data.network.model.Movie
+import kotlin.math.round
 
 class BrowingListPresenter : Presenter() {
 
@@ -23,7 +24,7 @@ class BrowingListPresenter : Presenter() {
 
         // TODO Remplir le contenu de la carte à partir de l'objet Movie
         holder.card.titleText = movie.name
-        holder.card.contentText = movie.rating.toString()
+        holder.card.contentText = round(movie.rating!!).toString() + "/10"
         holder.loadImage(
             movie.posterURL
                 ?: "https://www.publicdomainpictures.net/pictures/280000/velka/not-found-image-15383864787lu.jpg"

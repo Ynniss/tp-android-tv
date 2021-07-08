@@ -25,7 +25,7 @@ class BrowseFragment : BrowseSupportFragment() {
         prepareEntranceTransition()
 
 
-        lifecycleScope.launch(Dispatchers.Main) {
+        val job = lifecycleScope.launch(Dispatchers.Main) {
             val boxOffice = async(Dispatchers.IO) {
                 NetworkManager.getBoxOffice()
             }
@@ -36,11 +36,14 @@ class BrowseFragment : BrowseSupportFragment() {
             boxOffice.await().forEach { movie ->
                 boxOfficeAdapter.add(movie)
             }
+
             anticipatedMovies.await().forEach { movie ->
                 anticipatedAdapter.add(movie)
             }
+
             startEntranceTransition()
         }
+
 
         fragmentAdapter.add(ListRow(HeaderItem(0, "Les sorties"), boxOfficeAdapter))
         fragmentAdapter.add(ListRow(HeaderItem(0, "Attendus"), anticipatedAdapter))
