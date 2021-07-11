@@ -46,6 +46,7 @@ class BrowseFragment : BrowseSupportFragment() {
             }
             startEntranceTransition()
         }
+
         fragmentAdapter.add(ListRow(HeaderItem(0, "Les sorties"), boxOfficeAdapter))
         fragmentAdapter.add(ListRow(HeaderItem(0, "Attendus"), anticipatedAdapter))
 
