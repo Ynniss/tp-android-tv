@@ -5,8 +5,8 @@ Moussa OUDJAMA - Cindy NGUYEN - Yannis MEKAOUCHE
 ## Découvrir le projet
 **Alors que nous n'avons pas encore fait les modifications pour une compatibilité Android TV, pourquoi l'application arrive-t-elle à se lancer ?**
 <br>
-=> Les applications TV utilisent la même structure que les applications mobiles et tablettes.
-Cette similitude signifie que nous pouvons modifier une application existante sur une télévision ou créer de nouvelles apps basées sur nos connaissances en développement d’application pour Android
+=> Les applications TV utilisent la même structure que les applications mobiles et tablettes, elles tournent aussi sur android...
+Nous pouvons donc faire tourner nos applications android sur android tv, mais des ajustements seront nécessaires, pour se conformer aux normes UX propres à ce format bien spécifique, qu'est la télé.
 
 **Des éléments ont-ils changé ?**
 <br>
