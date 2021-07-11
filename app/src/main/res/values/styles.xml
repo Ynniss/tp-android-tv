@@ -7,4 +7,10 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+
+    <style name="GuidedSteps" parent="Theme.Leanback.GuidedStep">
+        <item name="guidedActionsBackground">@color/guidedstep_actions_background</item>
+        <item name="guidedActionsBackgroundDark">@color/guidedstep_actions_dark_background</item>
+    </style>
+
 </resources>

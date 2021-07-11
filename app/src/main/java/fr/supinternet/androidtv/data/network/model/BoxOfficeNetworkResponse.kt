@@ -1,12 +1,15 @@
 package fr.supinternet.androidtv.data.network.model
 
+import android.os.Parcelable
 import fr.supinternet.androidtv.data.network.api.omdb.model.MovieDetailsAPINetworkResponse
 import fr.supinternet.androidtv.data.network.api.trakt.model.MovieAPINetworkResponse
 import fr.supinternet.androidtv.data.network.api.trakt.model.MovieOverviewAPINetworkResponse
 import fr.supinternet.androidtv.data.network.api.trakt.model.RelatedMovieAPINetworkResponse
+import kotlinx.android.parcel.Parcelize
 import java.text.SimpleDateFormat
 import java.util.*
 
+@Parcelize
 data class Movie(
     val id: Int,
     val name: String,
@@ -24,7 +27,7 @@ data class Movie(
     val rating: Double?,
     val revenue: Int,
     val relatedMovies: List<RelatedBoxOfficeMovie>?
-) {
+) : Parcelable {
 
     constructor(
         boxOffice: MovieAPINetworkResponse,
@@ -71,11 +74,12 @@ data class Movie(
             )
 }
 
+@Parcelize
 data class RelatedBoxOfficeMovie(
     val id: Int,
     val name: String,
     val year: Int
-) {
+) : Parcelable {
 
     constructor(resp: RelatedMovieAPINetworkResponse) : this(
         id = resp.ids.trakt,

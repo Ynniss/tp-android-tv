@@ -12,6 +12,7 @@ import fr.supinternet.androidtv.ui.main.DetailsActivity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
+import java.io.Serializable
 
 
 class BrowseFragment : BrowseSupportFragment() {
@@ -50,9 +51,10 @@ class BrowseFragment : BrowseSupportFragment() {
 
         onItemViewClickedListener =
             OnItemViewClickedListener { itemViewHolder, item, rowViewHolder, row ->
+                val movie = item as Movie
                 Log.d("TAG", item.toString())
                 val intent = Intent(requireContext(), DetailsActivity::class.java)
-                intent.putExtra("movieData", item.toString())
+                intent.putExtra("movieData", movie)
                 startActivity(intent)
             }
     }

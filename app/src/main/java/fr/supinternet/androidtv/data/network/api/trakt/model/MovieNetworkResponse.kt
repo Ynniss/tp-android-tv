@@ -1,6 +1,8 @@
 package fr.supinternet.androidtv.data.network.api.trakt.model
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.Parcelize
 
 /**
  * Example:
@@ -70,8 +72,8 @@ import com.google.gson.annotations.SerializedName
  *     "certification": "PG"
  * }
  *
-**/
-
+ **/
+@Parcelize
 data class MovieOverviewAPINetworkResponse(
     @SerializedName("available_translations")
     val availableTranslations: List<String>,
@@ -111,4 +113,4 @@ data class MovieOverviewAPINetworkResponse(
     val votes: Int,
     @SerializedName("year")
     val year: Int
-)
+) : Parcelable

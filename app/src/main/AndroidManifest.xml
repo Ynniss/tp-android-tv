@@ -29,6 +29,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.main.DetailsActivity" />
+        <activity
+            android:name=".ui.guidedsteps.GuidedStepsActivity"
+            android:theme="@style/GuidedSteps" />
 
     </application>
 
